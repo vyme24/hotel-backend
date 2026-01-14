@@ -3,36 +3,37 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mailService = require('../../services/mailer');
 const { getLocalIPInfo } = require('../../utils/ipinfo');
-//const generateUsername = require('../../utils/generateUsername');
+const generateUsername = require('../../utils/generateUsername');
 
-// const register = async (req, res) => {
-//     const {name, email, password } = req.body;
+const register = async (req, res) => {
+    const {name, email, password } = req.body;
 
-//     try {
-//         const existingUser = await AdminUser.findOne({ email });
-//         if (existingUser) {
-//             return res.status(400).json({ message: 'User already exists' });
-//         }
+    try {
+        const existingUser = await AdminUser.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
 
-//         const hashedPassword = await bcrypt.hash(password, 10);
-//         const username = generateUsername();
-//         const user = new AdminUser({
-//             username: username,
-//             name,
-//             email,
-//             password: hashedPassword
-//         });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const username = generateUsername();
+        const user = new AdminUser({
+            username: username,
+            name,
+            email,
+            password: hashedPassword
+        });
 
-//         await user.save();
-//         await mailService.sendWelcomeEmail(email, name);
-//         res.status(201).json({ message: 'User registered successfully' });
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(500).send('Server error');
-//     }
-// };
+        await user.save();
+        await mailService.sendWelcomeEmail(email, name);
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+};
 
 const login = async (req, res) => {
+   
     const { user, password } = req.body;
 
     try {
@@ -104,7 +105,7 @@ const resetPassword = async (req, res) => {
 }
 
 module.exports = {
-     //register,
+     register,
     login,
     forgotPassword,
     resetPassword
