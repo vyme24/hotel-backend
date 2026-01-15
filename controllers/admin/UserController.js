@@ -20,6 +20,19 @@ const getUser = async(req,res) => {
 
 }
 
+const logout = async(req,res) => {
+  try {
+     req.user = null;
+     req.session = null;
+     res.status(200).json({ status: 'success', message: 'logout successful'});
+    
+  } catch (error) {
+     return res.status(500).json(error.message || "Server Error")
+  }
+
+}
+
 module.exports = {
-    getUser
+    getUser,
+    logout
 }

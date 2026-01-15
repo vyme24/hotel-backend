@@ -20,8 +20,10 @@ app.get('/', (req, res) => {
 // Import and use admin auth routes
 const adminAuthRoutes = require('./routes/admin/authRoutes');
 const adminUserRoutes = require('./routes/admin/userRoutes');
+const adminHotelRoutes = require('./routes/admin/hotelRoutes');
 app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/admin/user', adminUserRoutes);
+app.use('/api/admin/hotel',  adminHotelRoutes);
 
 
 

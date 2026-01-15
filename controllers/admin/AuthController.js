@@ -46,16 +46,19 @@ const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-
-        const payload = {
+           const payload = {
             user: {
                 id: userExist.id,
                 role: userExist.role
             }
         };
 
+    
+     
+
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-        await mailService.sendLoginAlertEmail(userExist.email, userExist.name, new Date());
+       // await mailService.sendLoginAlertEmail(userExist.email, userExist.name, new Date());
+       
         await getLocalIPInfo();
         res.json({ status: 'success', message: 'Login successful' , token });
     } catch (error) {
