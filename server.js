@@ -25,11 +25,12 @@ const adminAuthRoutes = require('./routes/adminRoutes');
 
 const adminUserRoutes = require('./routes/userRoutes');
 const adminHotelRoutes = require('./routes/hotelRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/admin/user', adminUserRoutes);
 app.use('/api/admin/hotel', adminHotelRoutes);
-
+app.use('/api/admin/dashboard', dashboardRoutes);
 
 const bookingRoutes = require('./routes/bookingRoutes');
 const couponRoutes = require('./routes/couponRoutes');
@@ -40,6 +41,7 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const userRoutes = require('./routes/userRoutes');
 const notificationsRouter = require('./routes/notificationRoutes');
 
+
 app.use('/api/booking', bookingRoutes);
 app.use('/api/coupon', couponRoutes);
 app.use('/api/room', roomRoutes);
@@ -48,6 +50,7 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/review', reviewRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/notification', notificationsRouter);
+
 
 app.listen(process.env.PORT, process.env.HOST, () => {
   console.log(`Server is running at http://${process.env.HOST}:${process.env.PORT}`);
