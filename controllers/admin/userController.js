@@ -1,4 +1,4 @@
-const AdminUser = require('../models//AdminUser');
+const AdminUser = require('../../models/AdminUser');
 
 const getUser = async(req,res) => {
 

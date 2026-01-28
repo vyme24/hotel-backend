@@ -1,13 +1,13 @@
-const RoomInventory = require("../models/RoomInventory");
+const Payment = require("../../models/Payment");
 
-const addInventory = async (req, res) => {
+const addPayment = async (req, res) => {
     try {
-        const inventory = new RoomInventory(req.body);
-        const saved = await inventory.save();
+        const payment = new Payment(req.body);
+        const saved = await payment.save();
 
         return res.status(201).json({
             status: true,
-            message: "inventory created successfully",
+            message: "payment created successfully",
             data: saved
         });
     } catch (error) {
@@ -20,14 +20,14 @@ const addInventory = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const inventories = await RoomInventory.find({})
-            .populate("hotelId")
-            .populate("roomId");
+        const payments = await Payment.find({})
+            .populate("bookingId")
+            .populate("userId");
 
         return res.status(200).json({
             status: true,
-            message: "inventory fetched successfully",
-            data: inventories
+            message: "payments fetched successfully",
+            data: payments
         });
     } catch (err) {
         return res.status(500).json({
@@ -40,21 +40,21 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Inventory Id Required!");
+            throw Error("Payment Id Required!");
         }
 
-        const inventory = await RoomInventory.findById(req.params.id)
-            .populate("hotelId")
-            .populate("roomId");
+        const payment = await Payment.findById(req.params.id)
+            .populate("bookingId")
+            .populate("userId");
 
-        if (!inventory) {
-            throw Error("Inventory Not Found");
+        if (!payment) {
+            throw Error("Payment Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "inventory fetched successfully",
-            data: inventory
+            message: "payment fetched successfully",
+            data: payment
         });
     } catch (err) {
         return res.status(500).json({
@@ -67,22 +67,22 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Inventory Id Required!");
+            throw Error("Payment Id Required!");
         }
 
-        const updated = await RoomInventory.findByIdAndUpdate(
+        const updated = await Payment.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
 
         if (!updated) {
-            throw Error("Inventory Not Found");
+            throw Error("Payment Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "inventory updated successfully",
+            message: "payment updated successfully",
             data: updated
         });
     } catch (err) {
@@ -96,18 +96,18 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Inventory Id Required!");
+            throw Error("Payment Id Required!");
         }
 
-        const deleted = await RoomInventory.findByIdAndDelete(req.params.id);
+        const deleted = await Payment.findByIdAndDelete(req.params.id);
 
         if (!deleted) {
-            throw Error("Inventory Not Found");
+            throw Error("Payment Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "inventory deleted successfully"
+            message: "payment deleted successfully"
         });
     } catch (err) {
         return res.status(500).json({
@@ -118,7 +118,7 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-    addInventory,
+    addPayment,
     getAll,
     get,
     update,

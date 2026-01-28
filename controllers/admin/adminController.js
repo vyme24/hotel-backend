@@ -1,9 +1,9 @@
-const AdminUser = require('../models/AdminUser');
+const AdminUser = require('../../models/AdminUser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const mailService = require('../services/mailer');
-const { getLocalIPInfo } = require('../utils/ipinfo');
-const generateUsername = require('../utils/generateUsername');
+const mailService = require('../../services/mailer');
+const { getLocalIPInfo } = require('../../utils/ipinfo');
+const generateUsername = require('../../utils/generateUsername');
 
 const register = async (req, res) => {
     const {name, email, password } = req.body;

@@ -1,13 +1,13 @@
-const Payment = require("../models/Payment");
+const Room = require("../../models/Room");
 
-const addPayment = async (req, res) => {
+const addRoom = async (req, res) => {
     try {
-        const payment = new Payment(req.body);
-        const saved = await payment.save();
+        const room = new Room(req.body);
+        const saved = await room.save();
 
         return res.status(201).json({
             status: true,
-            message: "payment created successfully",
+            message: "room created successfully",
             data: saved
         });
     } catch (error) {
@@ -20,14 +20,13 @@ const addPayment = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const payments = await Payment.find({})
-            .populate("bookingId")
-            .populate("userId");
+        const rooms = await Room.find({})
+            .populate("hotelId");
 
         return res.status(200).json({
             status: true,
-            message: "payments fetched successfully",
-            data: payments
+            message: "rooms fetched successfully",
+            data: rooms
         });
     } catch (err) {
         return res.status(500).json({
@@ -40,21 +39,20 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Payment Id Required!");
+            throw Error("Room Id Required!");
         }
 
-        const payment = await Payment.findById(req.params.id)
-            .populate("bookingId")
-            .populate("userId");
+        const room = await Room.findById(req.params.id)
+            .populate("hotelId");
 
-        if (!payment) {
-            throw Error("Payment Not Found");
+        if (!room) {
+            throw Error("Room Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "payment fetched successfully",
-            data: payment
+            message: "room fetched successfully",
+            data: room
         });
     } catch (err) {
         return res.status(500).json({
@@ -67,22 +65,22 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Payment Id Required!");
+            throw Error("Room Id Required!");
         }
 
-        const updated = await Payment.findByIdAndUpdate(
+        const updated = await Room.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
 
         if (!updated) {
-            throw Error("Payment Not Found");
+            throw Error("Room Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "payment updated successfully",
+            message: "room updated successfully",
             data: updated
         });
     } catch (err) {
@@ -96,18 +94,18 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Payment Id Required!");
+            throw Error("Room Id Required!");
         }
 
-        const deleted = await Payment.findByIdAndDelete(req.params.id);
+        const deleted = await Room.findByIdAndDelete(req.params.id);
 
         if (!deleted) {
-            throw Error("Payment Not Found");
+            throw Error("Room Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "payment deleted successfully"
+            message: "room deleted successfully"
         });
     } catch (err) {
         return res.status(500).json({
@@ -118,7 +116,7 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-    addPayment,
+    addRoom,
     getAll,
     get,
     update,

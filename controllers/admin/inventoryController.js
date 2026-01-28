@@ -1,13 +1,13 @@
-const Coupon = require("../models/Coupon");
+const RoomInventory = require("../../models/RoomInventory");
 
-const addCoupon = async (req, res) => {
+const addInventory = async (req, res) => {
     try {
-        const coupon = new Coupon(req.body);
-        const saved = await coupon.save();
+        const inventory = new RoomInventory(req.body);
+        const saved = await inventory.save();
 
         return res.status(201).json({
             status: true,
-            message: "coupon created successfully",
+            message: "inventory created successfully",
             data: saved
         });
     } catch (error) {
@@ -20,12 +20,14 @@ const addCoupon = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const coupons = await Coupon.find({});
+        const inventories = await RoomInventory.find({})
+            .populate("hotelId")
+            .populate("roomId");
 
         return res.status(200).json({
             status: true,
-            message: "coupons fetched successfully",
-            data: coupons
+            message: "inventory fetched successfully",
+            data: inventories
         });
     } catch (err) {
         return res.status(500).json({
@@ -38,19 +40,21 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Coupon Id Required!");
+            throw Error("Inventory Id Required!");
         }
 
-        const coupon = await Coupon.findById(req.params.id);
+        const inventory = await RoomInventory.findById(req.params.id)
+            .populate("hotelId")
+            .populate("roomId");
 
-        if (!coupon) {
-            throw Error("Coupon Not Found");
+        if (!inventory) {
+            throw Error("Inventory Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "coupon fetched successfully",
-            data: coupon
+            message: "inventory fetched successfully",
+            data: inventory
         });
     } catch (err) {
         return res.status(500).json({
@@ -63,22 +67,22 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Coupon Id Required!");
+            throw Error("Inventory Id Required!");
         }
 
-        const updated = await Coupon.findByIdAndUpdate(
+        const updated = await RoomInventory.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
 
         if (!updated) {
-            throw Error("Coupon Not Found");
+            throw Error("Inventory Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "coupon updated successfully",
+            message: "inventory updated successfully",
             data: updated
         });
     } catch (err) {
@@ -92,18 +96,18 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Coupon Id Required!");
+            throw Error("Inventory Id Required!");
         }
 
-        const deleted = await Coupon.findByIdAndDelete(req.params.id);
+        const deleted = await RoomInventory.findByIdAndDelete(req.params.id);
 
         if (!deleted) {
-            throw Error("Coupon Not Found");
+            throw Error("Inventory Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "coupon deleted successfully"
+            message: "inventory deleted successfully"
         });
     } catch (err) {
         return res.status(500).json({
@@ -114,7 +118,7 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-    addCoupon,
+    addInventory,
     getAll,
     get,
     update,

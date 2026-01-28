@@ -1,13 +1,13 @@
-const Hotel = require("../models/Hotel");
+const Coupon = require("../../models/Coupon");
 
-const addHotel = async (req, res) => {
+const addCoupon = async (req, res) => {
     try {
-        const hotel = new Hotel(req.body);
-        const saved = await hotel.save();
+        const coupon = new Coupon(req.body);
+        const saved = await coupon.save();
 
         return res.status(201).json({
             status: true,
-            message: "hotel created successfully",
+            message: "coupon created successfully",
             data: saved
         });
     } catch (error) {
@@ -20,12 +20,12 @@ const addHotel = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const hotels = await Hotel.find({});
+        const coupons = await Coupon.find({});
 
         return res.status(200).json({
             status: true,
-            message: "hotels fetched successfully",
-            data: hotels
+            message: "coupons fetched successfully",
+            data: coupons
         });
     } catch (err) {
         return res.status(500).json({
@@ -38,19 +38,19 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Hotel Id Required!");
+            throw Error("Coupon Id Required!");
         }
 
-        const hotel = await Hotel.findById(req.params.id);
+        const coupon = await Coupon.findById(req.params.id);
 
-        if (!hotel) {
-            throw Error("Hotel Not Found");
+        if (!coupon) {
+            throw Error("Coupon Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "hotel fetched successfully",
-            data: hotel
+            message: "coupon fetched successfully",
+            data: coupon
         });
     } catch (err) {
         return res.status(500).json({
@@ -63,22 +63,22 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Hotel Id Required!");
+            throw Error("Coupon Id Required!");
         }
 
-        const updated = await Hotel.findByIdAndUpdate(
+        const updated = await Coupon.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
 
         if (!updated) {
-            throw Error("Hotel Not Found");
+            throw Error("Coupon Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "hotel updated successfully",
+            message: "coupon updated successfully",
             data: updated
         });
     } catch (err) {
@@ -92,18 +92,18 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Hotel Id Required!");
+            throw Error("Coupon Id Required!");
         }
 
-        const deleted = await Hotel.findByIdAndDelete(req.params.id);
+        const deleted = await Coupon.findByIdAndDelete(req.params.id);
 
         if (!deleted) {
-            throw Error("Hotel Not Found");
+            throw Error("Coupon Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "hotel deleted successfully"
+            message: "coupon deleted successfully"
         });
     } catch (err) {
         return res.status(500).json({
@@ -114,7 +114,7 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-    addHotel,
+    addCoupon,
     getAll,
     get,
     update,

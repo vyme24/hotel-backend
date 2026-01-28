@@ -1,11 +1,11 @@
-const AdminUser = require('../models//AdminUser');
-const Booking = require('../models/Booking');
-const Coupon = require('../models/Coupon');
-const Hotel = require('../models/Hotel');
-const Payment = require('../models/Payment');
-const Review = require('../models/Review');
-const Room = require('../models/Room');
-const User = require('../models/User');
+const AdminUser = require('../../models/AdminUser');
+const Booking = require('../../models/Booking');
+const Coupon = require('../../models/Coupon');
+const Hotel = require('../../models/Hotel');
+const Payment = require('../../models/Payment');
+const Review = require('../../models/Review');
+const Room = require('../../models/Room');
+const User = require('../../models/User');
 
 const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

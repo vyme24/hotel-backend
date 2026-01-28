@@ -1,13 +1,13 @@
-const Booking = require("../models/Booking");
+const Review = require("../../models/Review");
 
-const addBooking = async (req, res) => {
+const addReview = async (req, res) => {
     try {
-        const booking = new Booking(req.body);
-        const saved = await booking.save();
+        const review = new Review(req.body);
+        const saved = await review.save();
 
         return res.status(201).json({
             status: true,
-            message: "booking created successfully",
+            message: "review created successfully",
             data: saved
         });
     } catch (error) {
@@ -20,14 +20,15 @@ const addBooking = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const bookings = await Booking.find({})
-           if(!bookings){
-            throw Error("no  hotel founded")
-           }
+        const reviews = await Review.find({})
+            .populate("hotelId")
+            .populate("bookingId")
+            .populate("userId");
+
         return res.status(200).json({
             status: true,
-            message: "bookings fetched successfully",
-            data: bookings
+            message: "reviews fetched successfully",
+            data: reviews
         });
     } catch (err) {
         return res.status(500).json({
@@ -40,22 +41,22 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Booking Id Required!");
+            throw Error("Review Id Required!");
         }
 
-        const booking = await Booking.findById(req.params.id)
+        const review = await Review.findById(req.params.id)
             .populate("hotelId")
-            .populate("roomId")
+            .populate("bookingId")
             .populate("userId");
 
-        if (!booking) {
-            throw Error("Booking Not Found");
+        if (!review) {
+            throw Error("Review Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "booking fetched successfully",
-            data: booking
+            message: "review fetched successfully",
+            data: review
         });
     } catch (err) {
         return res.status(500).json({
@@ -68,22 +69,22 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Booking Id Required!");
+            throw Error("Review Id Required!");
         }
 
-        const updated = await Booking.findByIdAndUpdate(
+        const updated = await Review.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
 
         if (!updated) {
-            throw Error("Booking Not Found");
+            throw Error("Review Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "booking updated successfully",
+            message: "review updated successfully",
             data: updated
         });
     } catch (err) {
@@ -97,18 +98,18 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         if (!req.params.id) {
-            throw Error("Booking Id Required!");
+            throw Error("Review Id Required!");
         }
 
-        const deleted = await Booking.findByIdAndDelete(req.params.id);
+        const deleted = await Review.findByIdAndDelete(req.params.id);
 
         if (!deleted) {
-            throw Error("Booking Not Found");
+            throw Error("Review Not Found");
         }
 
         return res.status(200).json({
             status: true,
-            message: "booking deleted successfully"
+            message: "review deleted successfully"
         });
     } catch (err) {
         return res.status(500).json({
@@ -119,7 +120,7 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-    addBooking,
+    addReview,
     getAll,
     get,
     update,

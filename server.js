@@ -21,25 +21,25 @@ app.get('/', (req, res) => {
 });
 
 
-const adminAuthRoutes = require('./routes/adminRoutes');
+const adminAuthRoutes = require('./routes/admin/adminRoutes');
 
-const adminUserRoutes = require('./routes/userRoutes');
-const adminHotelRoutes = require('./routes/hotelRoutes');
-const dashboardRoutes = require('./routes/dashboardRoutes');
+const adminUserRoutes = require('./routes/admin/userRoutes');
+const adminHotelRoutes = require('./routes/admin/hotelRoutes');
+const dashboardRoutes = require('./routes/admin/dashboardRoutes');
 
 app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/admin/user', adminUserRoutes);
 app.use('/api/admin/hotel', adminHotelRoutes);
 app.use('/api/admin/dashboard', dashboardRoutes);
 
-const bookingRoutes = require('./routes/bookingRoutes');
-const couponRoutes = require('./routes/couponRoutes');
-const roomRoutes = require('./routes/roomRoutes');
-const inventoryRoutes = require('./routes/inventoryRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-const userRoutes = require('./routes/userRoutes');
-const notificationsRouter = require('./routes/notificationRoutes');
+const bookingRoutes = require('./routes/admin/bookingRoutes');
+const couponRoutes = require('./routes/admin/couponRoutes');
+const roomRoutes = require('./routes/admin/roomRoutes');
+const inventoryRoutes = require('./routes/admin/inventoryRoutes');
+const paymentRoutes = require('./routes/admin/paymentRoutes');
+const reviewRoutes = require('./routes/admin/reviewRoutes');
+const userRoutes = require('./routes/admin/userRoutes');
+const notificationsRouter = require('./routes/admin/notificationRoutes');
 
 
 app.use('/api/booking', bookingRoutes);
@@ -50,6 +50,22 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/review', reviewRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/notification', notificationsRouter);
+
+
+
+
+/* User ROutes */
+
+const AuthRoutes = require('./routes/user/authRoutes');
+
+const UserRoutes = require('./routes/user/userRoutes');
+const HotelRoutes = require('./routes/user/hotelRoutes');
+const PaymentRoutes = require('./routes/user/paymentRoutes');
+
+app.use('/api/auth', AuthRoutes);
+app.use('/api/user', UserRoutes);
+app.use('/api/hotel', HotelRoutes);
+app.use('/api/payment', PaymentRoutes);
 
 
 app.listen(process.env.PORT, process.env.HOST, () => {
