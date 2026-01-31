@@ -190,12 +190,7 @@ const verifyOTP = async (req, res) => {
 
       return res.status(200).json({
         message: "Login successful",
-        token,
-        user: {
-          id: userExist._id,
-          email: userExist.email,
-          name: userExist.name,
-        },
+        token
       });
     }
 
