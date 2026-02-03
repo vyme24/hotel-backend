@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.static(path.join(__dirname,"public")))
 
 connectDB();
 
@@ -38,18 +38,16 @@ const roomRoutes = require('./routes/admin/roomRoutes');
 const inventoryRoutes = require('./routes/admin/inventoryRoutes');
 const paymentRoutes = require('./routes/admin/paymentRoutes');
 const reviewRoutes = require('./routes/admin/reviewRoutes');
-const userRoutes = require('./routes/admin/userRoutes');
 const notificationsRouter = require('./routes/admin/notificationRoutes');
 
 
-app.use('/api/booking', bookingRoutes);
-app.use('/api/coupon', couponRoutes);
-app.use('/api/room', roomRoutes);
-app.use('/api/inventory', inventoryRoutes);
-app.use('/api/payment', paymentRoutes);
-app.use('/api/review', reviewRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/notification', notificationsRouter);
+app.use('/api/admin/booking', bookingRoutes);
+app.use('/api/admin/coupon', couponRoutes);
+app.use('/api/admin/room', roomRoutes);
+app.use('/api/admin/inventory', inventoryRoutes);
+app.use('/api/admin/payment', paymentRoutes);
+app.use('/api/admin/review', reviewRoutes);
+app.use('/api/admin/notification', notificationsRouter);
 
 
 

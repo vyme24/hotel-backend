@@ -32,7 +32,32 @@ const logout = async(req,res) => {
 
 }
 
+const update = async(req,res) => {
+
+   try {
+      
+      const avatarurl = "http://127.0.0.1:5000/upload/" + req.file.filename;
+      
+      const userId= req.user.user.id;
+       const user = await AdminUser.findOneAndUpdate({_id:userId}, {
+         avatar : avatarurl
+       })
+      
+      
+     
+
+    res.status(200).json({ status: 'success', message: 'getUser successful' , });
+
+    
+   } catch (error) {
+    return res.status(500).json(error.message || "Server Error")
+   }
+
+
+}
+
 module.exports = {
     getUser,
-    logout
+    logout,
+    update
 }
