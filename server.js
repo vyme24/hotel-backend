@@ -59,11 +59,13 @@ const AuthRoutes = require('./routes/user/authRoutes');
 const UserRoutes = require('./routes/user/userRoutes');
 const HotelRoutes = require('./routes/user/hotelRoutes');
 const PaymentRoutes = require('./routes/user/paymentRoutes');
+const RoomRoutes = require('./routes/user/roomRoutes');
 
 app.use('/api/auth', AuthRoutes);
 app.use('/api/user', UserRoutes);
 app.use('/api/hotel', HotelRoutes);
 app.use('/api/payment', PaymentRoutes);
+app.use('/api/room', RoomRoutes);
 
 
 app.listen(process.env.PORT, process.env.HOST, () => {
